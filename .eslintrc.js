@@ -47,5 +47,6 @@ module.exports = {
     'no-empty-function': 'off',
     'max-classes-per-file': 'off',
     camelcase: 'off',
+    'consistent-return': 'off',
   },
 };

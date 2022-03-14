@@ -1,5 +1,5 @@
 import {
-  Entity, ObjectID, ObjectIdColumn, Column, UpdateDateColumn, CreateDateColumn,
+  Entity, ObjectID, ObjectIdColumn, Column, UpdateDateColumn, CreateDateColumn, Index,
 } from 'typeorm';
 
 @Entity({ name: 'users' })
@@ -10,6 +10,7 @@ export class UserEntity {
   id: ObjectID;
 
   @Column()
+  @Index({ unique: true })
   first_name: string;
 
   @Column()

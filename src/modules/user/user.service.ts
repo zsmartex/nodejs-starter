@@ -1,6 +1,6 @@
 import { MongoBulkWriteError } from 'mongodb';
 import { getCustomRepository, getMongoManager } from 'typeorm';
-import { UserDto } from './dtos/user.dto';
+import { CreateUserDto } from './dtos/user.dto';
 import { UserEntity } from './user.entity';
 import { UserRepository } from './user.repository';
 
@@ -18,12 +18,18 @@ export class UserService {
 
   manager = getMongoManager();
 
-  async create(user_dto: UserDto) {
-    const user = this.userRepository.create(user_dto);
+  async findOne(email: string) {
+    return this.userRepository.findOne({
+      where: { email },
+    });
+  }
+
+  async create(create_user_dto: CreateUserDto) {
+    const user = this.userRepository.create(create_user_dto);
     try {
-      await this.manager.save(user);
+      return await this.manager.save(user);
     } catch (error: any) {
-      ErrorHandler(error);
+      return ErrorHandler(error);
     }
   }
 }

@@ -1,9 +1,17 @@
 import { IsString } from 'amala';
 
-export class UserDto {
+export class UserLoginDto {
   @IsString()
-  first_name: string;
+  email: string;
 
   @IsString()
-  last_name: string;
+  password: string;
+}
+
+export class CreateUserDto {
+  @IsString()
+  email: string;
+
+  @IsString()
+  password: string;
 }

@@ -13,6 +13,9 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"]
+    },
   },
   "include": ["./src/**/*"]
 }

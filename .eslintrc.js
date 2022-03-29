@@ -48,5 +48,8 @@ module.exports = {
     'max-classes-per-file': 'off',
     camelcase: 'off',
     'consistent-return': 'off',
+    'no-plusplus': 'off',
+    'no-param-reassign': 'off',
+    'max-len': 'off',
   },
 };

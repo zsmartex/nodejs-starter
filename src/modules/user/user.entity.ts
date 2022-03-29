@@ -1,6 +1,8 @@
 import {
-  Entity, ObjectID, ObjectIdColumn, Column, UpdateDateColumn, CreateDateColumn, Index,
+  Entity, ObjectID, ObjectIdColumn, Column, UpdateDateColumn, CreateDateColumn, Index, BeforeInsert, BeforeUpdate,
 } from 'typeorm';
+import bcrypt from 'bcrypt';
+import { Exclude } from 'amala';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -11,10 +13,10 @@ export class UserEntity {
 
   @Column()
   @Index({ unique: true })
-  first_name: string;
+  email: string;
 
-  @Column()
-  last_name: string;
+  @Column({ select: false })
+  password: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -22,8 +24,29 @@ export class UserEntity {
   @UpdateDateColumn()
   updated_at: Date;
 
-  constructor(firstName: string, lastName: string) {
-    this.first_name = firstName;
-    this.last_name = lastName;
+  constructor(email: string, password: string) {
+    this.email = email;
+    this.password = password;
+  }
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  hashPasswords() {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(this.password, salt);
+
+    this.password = hash;
+  }
+
+  comparePassword(password: string) {
+    return bcrypt.compareSync(password, this.password);
+  }
+
+  toJSON() {
+    return {
+      email: this.email,
+      created_at: this.created_at,
+      updated_at: this.updated_at,
+    };
   }
 }

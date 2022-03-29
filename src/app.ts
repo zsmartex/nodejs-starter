@@ -29,6 +29,7 @@ import cors from '@koa/cors';
 import helmet from 'koa-helmet';
 import json from 'koa-json';
 import logger from 'koa-logger';
+import session from 'koa-session';
 import 'reflect-metadata';
 import 'dotenv/config';
 import { bootstrapControllers } from 'amala';
@@ -37,6 +38,26 @@ import { UserEntity } from './modules/user/user.entity';
 
 const koaApp = new Koa();
 const koarouter = new KoaRouter();
+
+koaApp.keys = ['mysecret'];
+
+const CONFIG = {
+  key: 'session_id', /** (string) cookie key (default is koa.sess) */
+  /** (number || 'session') maxAge in ms (default is 1 days) */
+  /** 'session' will result in a cookie that expires when session/browser is closed */
+  /** Warning: If a session cookie is stolen, this cookie will never expire */
+  maxAge: 86400000,
+  autoCommit: true, /** (boolean) automatically commit headers (default true) */
+  overwrite: true, /** (boolean) can overwrite or not (default true) */
+  httpOnly: true, /** (boolean) httpOnly or not (default true) */
+  signed: true, /** (boolean) signed or not (default true) */
+  rolling: false,
+  renew: false,
+  secure: false, /** (boolean) secure cookie */
+  sameSite: undefined, /** (string) session cookie sameSite options (default null, don't set it) */
+};
+
+koaApp.use(session(CONFIG, koaApp));
 
 // eslint-disable-next-line func-names
 (async function () {

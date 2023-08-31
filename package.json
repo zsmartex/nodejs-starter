@@ -19,7 +19,7 @@
     "koa-router": "^10.1.1",
     "koa-session": "^6.2.0",
     "koa-swagger-decorator": "^1.8.5",
-    "mongodb": "^4.4.1",
+    "mongodb": "^4.17.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.45"
   },
